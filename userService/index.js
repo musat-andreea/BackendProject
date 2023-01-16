@@ -11,7 +11,7 @@ const app = express();
 const { APPLICATION_PORT, MONGO_USER, MONGO_PASSWORD, MONGO_IP, MONGO_PORT, REDIS_URL, REDIS_PORT, SESSION_SECRET } = require("../config/users-config.js");
 
 app.listen(APPLICATION_PORT, () => {
-    console.log(`Server listening on ${APPLICATION_PORT}`);
+    console.log(`User service listening on ${APPLICATION_PORT}`);
   });
 
 // Comment mongo config if running node app without docker integration
