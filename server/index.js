@@ -14,7 +14,7 @@ swaggerDocument = require("../swagger.json");
 
 app.use(
   '/api/api-docs',
-  checkUserLoggedin,
+  // checkUserLoggedin,
   swaggerUi.serve,
   swaggerUi.setup(swaggerDocument),
 );
