@@ -4,7 +4,7 @@ const pacients = require("./pacients.js");
 const prescriptions = require("./prescriptions.js");
 const appointments = require("./appointments.js");
 
-const PORT = process.env.PORT || 8008;
+const PORT = process.env.PORT || 3002;
 
 const app = express();
 
