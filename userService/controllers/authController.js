@@ -4,8 +4,8 @@ const bcrypt = require("bcrypt");
 exports.signup = async (req, res) => {
     const { email, password } = req.body;
 
-    const emailExist = await User.findOne({email: email});
-    if(emailExist) return res.status(400).send('Email already exists');
+    const emailExist = await User.findOne({ email: email });
+    if (emailExist) return res.status(400).send('Email already exists');
 
     const hashPassword = await bcrypt.hash(password, 12);
 
@@ -59,4 +59,17 @@ exports.login = async (req, res) => {
             message: 'server error' + e,
         });
     }
+}
+
+exports.check = async (req, res) => {
+    const { user } = req.session;
+
+    if (!user) {
+        return res.status(410).json({ status: 'fail', message: 'unauthorized' });
+    }
+
+    res.status(200).json({
+        status: 'success',
+        user: { ...user, password: '' },
+    });
 }
