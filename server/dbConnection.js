@@ -1,5 +1,8 @@
-module.exports =  {
-    username: 'c##integration',
-    password: '03121998Alina',
-    connectionString: 'localhost/orcl'
-}
+const oracledb = require('oracledb');
+
+module.exports = {
+    username: 'SYS',
+    password: 'oracle',
+    connectionString: 'oracle:1521/orcl',
+    privilege: oracledb.SYSDBA,
+};
