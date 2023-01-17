@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const oracledb = require('oracledb');
+var credentials = require('./dbConnection.js');
 
 router.get("/prescriptions", (req, res) => {
    getAllPrescriptions(res);
@@ -33,7 +34,7 @@ async function getAllPrescriptions(res) {
     let connection;
   
     try {
-      connection = await oracledb.getConnection({ user: "c##integration", password: "03121998Alina", connectionString: "localhost/orcl"});
+      connection = await oracledb.getConnection({  user: credentials.username, password: credentials.password, connectionString: credentials.connectionString});
       console.log("Successfully connected to Oracle Database");
   
       const result = await connection.execute(
@@ -57,7 +58,7 @@ async function getPrescriptionsByDate(res, creationDate) {
     let connection;
   
     try {
-      connection = await oracledb.getConnection({ user: "c##integration", password: "03121998Alina", connectionString: "localhost/orcl"});
+      connection = await oracledb.getConnection({ user: credentials.username, password: credentials.password, connectionString: credentials.connectionString});
       console.log("Successfully connected to Oracle Database");
       const result = await connection.execute(
           `SELECT * FROM reteta WHERE data_reteta = TO_DATE(:creationDate,'YYYY-MM-DD')`, 
@@ -81,7 +82,7 @@ async function getPrescriptionById(res, id) {
     let connection;
   
     try {
-      connection = await oracledb.getConnection({ user: "c##integration", password: "03121998Alina", connectionString: "localhost/orcl"});
+      connection = await oracledb.getConnection({ user: credentials.username, password: credentials.password, connectionString: credentials.connectionString});
       console.log("Successfully connected to Oracle Database");
   
       const result = await connection.execute(
@@ -106,7 +107,7 @@ async function deletePrescriptionById(res, id) {
     let connection;
   
     try {
-      connection = await oracledb.getConnection({ user: "c##integration", password: "03121998Alina", connectionString: "localhost/orcl"});
+      connection = await oracledb.getConnection({ user: credentials.username, password: credentials.password, connectionString: credentials.connectionString});
       console.log("Successfully connected to Oracle Database");
   
       const result = await connection.execute(
@@ -132,7 +133,7 @@ async function createPrescription(res, body) {
     let connection;
   
     try {
-      connection = await oracledb.getConnection({ user: "c##integration", password: "03121998Alina", connectionString: "localhost/orcl"});
+      connection = await oracledb.getConnection({ user: credentials.username, password: credentials.password, connectionString: credentials.connectionString});
       console.log("Successfully connected to Oracle Database");
   
       const recordNo = await connection.execute(
@@ -164,7 +165,7 @@ async function updatePrescriptionById(res, body, id) {
     let connection;
   
     try {
-      connection = await oracledb.getConnection({ user: "c##integration", password: "03121998Alina", connectionString: "localhost/orcl"});
+      connection = await oracledb.getConnection({ user: credentials.username, password: credentials.password, connectionString: credentials.connectionString});
       console.log("Successfully connected to Oracle Database");
 
       let values = Object.values(body);
