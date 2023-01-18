@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const doctors = require("./doctors.js");
 const pacients = require("./pacients.js");
 const prescriptions = require("./prescriptions.js");
@@ -24,6 +25,8 @@ app.listen(PORT, () => {
 });
 
 app.use(express.json());
+app.enable("trust proxy");
+app.use(cors({}));
 app.use('/api/', doctors);
 app.use('/api/', pacients);
 app.use('/api/', prescriptions);

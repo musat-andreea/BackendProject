@@ -28,17 +28,17 @@ exports.signup = async (req, res) => {
 }
 
 exports.login = async (req, res) => {
+    console.log('req.body', req.body)
     const { email, password } = req.body;
     try {
         const user = await User.findOne({ email })
-        if (!user) {
+        if (!user || !email) {
             res.status(404).json({
                 status: 'fail',
                 message: 'Incorrect email'
             });
             return;
         }
-
         const isCorrect = await bcrypt.compare(password, user.password)
         if (isCorrect) {
             if (req.session) {
