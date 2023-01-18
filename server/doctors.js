@@ -23,7 +23,6 @@ router.delete("/doctor-delete/:id", (req, res) => {
 });
 
 router.put("/doctor-create", (req, res) => {
-  console.log(req.body);
   createDoctor(res, req.body);
 });
 

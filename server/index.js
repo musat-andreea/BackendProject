@@ -1,21 +1,32 @@
 const express = require("express");
-const cors = require("cors");
 const doctors = require("./doctors.js");
 const pacients = require("./pacients.js");
 const prescriptions = require("./prescriptions.js");
 const appointments = require("./appointments.js");
-const checkUserLoggedin = require("./middleware/authMiddleware.js");
+const meds = require("./meds.js");
+const procedures = require("./procedures.js");
+const app_procedures = require("./appointment_procedure.js");
+const prescription_med = require("./prescription_med.js");
 
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 8008;
 
 const app = express();
+
+app.use(express.json());
+app.use('/', doctors);
+app.use('/', pacients);
+app.use('/', prescriptions);
+app.use('/', appointments);
+app.use('/', meds);
+app.use('/', procedures);
+app.use('/', app_procedures);
+app.use('/', prescription_med);
 
 const swaggerUi = require("swagger-ui-express");
 swaggerDocument = require("../swagger.json");
 
 app.use(
-  '/api/api-docs',
-  // checkUserLoggedin,
+  '/api-docs',
   swaggerUi.serve,
   swaggerUi.setup(swaggerDocument),
 );
@@ -24,24 +35,11 @@ app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
 
-app.use(express.json());
-app.enable("trust proxy");
-app.use(cors({}));
-app.use('/api/', doctors);
-app.use('/api/', pacients);
-app.use('/api/', prescriptions);
-app.use('/api/', appointments);
+// const dotenv = require('dotenv').config()
 
-/* test connection to Oracle DB */
-try {
-  const oracledb = require('oracledb');
-  var credentials = require('./dbConnection.js');
-  oracledb.getConnection({ user: credentials.username, password: credentials.password, connectionString: credentials.connectionString, privilege: credentials.privilege })
-    .then((connection) => {
-      connection.close().then(() => { });
-      console.log("Successfully connected to Oracle Database");
-    });
-} catch (err) {
-  console.log("Unsccessfully connected to Oracle Database");
-  console.error(err);
-}
+// const app = require('./app')
+
+//
+// app.listen(8008, () => {
+//     console.log('app is running on port 8008');
+// });

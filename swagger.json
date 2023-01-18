@@ -1,128 +1,49 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "version": "1.0.0",
-        "title": "My Project CRUD",
-        "description": "My Project Application API",
-        "license": {
-            "name": "MIT",
-            "url": "https://opensource.org/licenses/MIT"
-        }
-    },
-    "host": "localhost:8008",
-    "basePath": "/",
-    "tags": [
-        {
-            "name": "Doctors",
-            "description": "API for doctors in the system"
-        }
-    ],
-    "schemes": ["http"],
-    "consumes": ["application/json"],
-    "produces": ["application/json"],
-    "paths": {
-        "/doctors": {
-          "get": {
-            "tags": ["Doctors"],
-            "summary": "Get all doctors in system",
-            "responses": {
-              "200": {
-                "description": "OK"
-              }
+  "swagger": "2.0",
+  "info": {
+      "version": "1.0.0",
+      "title": "My Project CRUD",
+      "description": "My Project Application API",
+      "license": {
+          "name": "MIT",
+          "url": "https://opensource.org/licenses/MIT"
+      }
+  },
+  "host": "localhost:8008",
+  "basePath": "/",
+  "tags": [
+      {
+          "name": "Doctors",
+          "description": "API for doctors in the system"
+      }
+  ],
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+      "/doctors": {
+        "get": {
+          "tags": ["Doctors"],
+          "summary": "Get all doctors in system",
+          "responses": {
+            "200": {
+              "description": "OK"
             }
           }
-        },
-        "/doctors/{name}": {
-            "parameters": [
-                {
-                  "name": "name",
-                  "in": "path",
-                  "description": "name of doctor",
-                  "type": "string"
-                }
-            ],
-            "get": {
-              "tags": ["Doctors by name"],
-              "summary": "Get all doctors in system by name",
-              "responses": {
-                "200": {
-                  "description": "OK"
-                }
-              }
-            }
-        },
-        "/doctor/{id}": {
-            "parameters": [
-                {
-                  "name": "id",
-                  "in": "path",
-                  "description": "id of doctor",
-                  "type": "string"
-                }
-            ],
-            "get": {
-              "tags": ["Doctors by id"],
-              "summary": "Get doctor in system by id",
-              "responses": {
-                "200": {
-                  "description": "OK"
-                }
-              }
-            }
-        },
-        "/doctor-delete/{id}": {
-            "parameters": [
-                {
-                  "name": "id",
-                  "in": "path",
-                  "description": "id of doctor",
-                  "type": "string"
-                }
-            ],
-            "delete": {
-              "tags": ["Delete Doctor by id"],
-              "summary": "Delete doctor in system by id",
-              "responses": {
-                "200": {
-                  "description": "OK"
-                }
-              }
-            }
-        },
-        "/doctor-update/{id}": {
+        }
+      },
+      "/doctors/{name}": {
           "parameters": [
               {
-                "name": "id",
+                "name": "name",
                 "in": "path",
-                "description": "id of doctor",
+                "description": "name of doctor",
                 "type": "string"
-              },
-              {
-                "name": "doctor",
-                "in": "body",
-                "description": "the doctor to update",
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "id_spital": {
-                      "type":"number"
-                    },
-                    "id_specializare": {
-                      "type":"number"
-                    },
-                    "nume": {
-                      "type":"string"
-                    },
-                    "data_angajare": {
-                      "type":"string"
-                    }
-                  }
-                }
               }
           ],
-          "patch": {
-            "tags": ["Update Doctor by id"],
-            "summary": "Update doctor in system by id",
+          "get": {
+            "tags": ["Doctors by name"],
+            "summary": "Get all doctors in system by name",
             "responses": {
               "200": {
                 "description": "OK"
@@ -130,12 +51,56 @@
             }
           }
       },
-      "/doctor-create": {
+      "/doctor/{id}": {
+          "parameters": [
+              {
+                "name": "id",
+                "in": "path",
+                "description": "id of doctor",
+                "type": "string"
+              }
+          ],
+          "get": {
+            "tags": ["Doctors by id"],
+            "summary": "Get doctor in system by id",
+            "responses": {
+              "200": {
+                "description": "OK"
+              }
+            }
+          }
+      },
+      "/doctor-delete/{id}": {
+          "parameters": [
+              {
+                "name": "id",
+                "in": "path",
+                "description": "id of doctor",
+                "type": "string"
+              }
+          ],
+          "delete": {
+            "tags": ["Delete Doctor by id"],
+            "summary": "Delete doctor in system by id",
+            "responses": {
+              "200": {
+                "description": "OK"
+              }
+            }
+          }
+      },
+      "/doctor-update/{id}": {
         "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "id of doctor",
+              "type": "string"
+            },
             {
               "name": "doctor",
               "in": "body",
-              "description": "the doctor to create",
+              "description": "the doctor to update",
               "schema": {
                 "type": "object",
                 "properties": {
@@ -155,9 +120,9 @@
               }
             }
         ],
-        "put": {
-          "tags": ["Create Doctor by id"],
-          "summary": "Create doctor in system by id",
+        "patch": {
+          "tags": ["Update Doctor by id"],
+          "summary": "Update doctor in system by id",
           "responses": {
             "200": {
               "description": "OK"
@@ -165,111 +130,34 @@
           }
         }
     },
-    "/pacients": {
-      "get": {
-        "tags": ["Pacients"],
-        "summary": "Get all pacients in system",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/pacients/{name}": {
-        "parameters": [
-            {
-              "name": "name",
-              "in": "path",
-              "description": "name of pacient",
-              "type": "string"
-            }
-        ],
-        "get": {
-          "tags": ["Pacients by name"],
-          "summary": "Get all pacients in system by name",
-          "responses": {
-            "200": {
-              "description": "OK"
-            }
-          }
-        }
-    },
-    "/pacient/{id}": {
-        "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "description": "id of pacient",
-              "type": "string"
-            }
-        ],
-        "get": {
-          "tags": ["Pacients by id"],
-          "summary": "Get pacient in system by id",
-          "responses": {
-            "200": {
-              "description": "OK"
-            }
-          }
-        }
-    },
-    "/pacient-delete/{id}": {
-        "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "description": "id of pacient to delete",
-              "type": "string"
-            }
-        ],
-        "delete": {
-          "tags": ["Delete pacient by id"],
-          "summary": "Delete pacient in system by id",
-          "responses": {
-            "200": {
-              "description": "OK"
-            }
-          }
-        }
-    },
-    "/pacient-update/{id}": {
+    "/doctor-create": {
       "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "description": "id of pacient",
-            "type": "string"
-          },
-          {
-            "name": "pacient",
+            "name": "doctor",
             "in": "body",
-            "description": "the pacient to update",
+            "description": "the doctor to create",
             "schema": {
               "type": "object",
               "properties": {
+                "id_spital": {
+                  "type":"number"
+                },
+                "id_specializare": {
+                  "type":"number"
+                },
                 "nume": {
                   "type":"string"
                 },
-                "prenume": {
-                  "type":"string"
-                },
-                "data_nastere": {
-                  "type":"string"
-                },
-                "telefon": {
-                  "type":"string"
-                },
-                "email": {
+                "data_angajare": {
                   "type":"string"
                 }
               }
             }
           }
       ],
-      "patch": {
-        "tags": ["Update pacient by id"],
-        "summary": "Update pacient in system by id",
+      "put": {
+        "tags": ["Create doctor"],
+        "summary": "Create doctor in system",
         "responses": {
           "200": {
             "description": "OK"
@@ -277,12 +165,86 @@
         }
       }
   },
-  "/pacient-create": {
-    "parameters": [    
+  "/pacients": {
+    "get": {
+      "tags": ["Pacients"],
+      "summary": "Get all pacients in system",
+      "responses": {
+        "200": {
+          "description": "OK"
+        }
+      }
+    }
+  },
+  "/pacients/{name}": {
+      "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "description": "name of pacient",
+            "type": "string"
+          }
+      ],
+      "get": {
+        "tags": ["Pacients by name"],
+        "summary": "Get all pacients in system by name",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+  },
+  "/pacient/{id}": {
+      "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of pacient",
+            "type": "string"
+          }
+      ],
+      "get": {
+        "tags": ["Pacients by id"],
+        "summary": "Get pacient in system by id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+  },
+  "/pacient-delete/{id}": {
+      "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of pacient to delete",
+            "type": "string"
+          }
+      ],
+      "delete": {
+        "tags": ["Delete pacient by id"],
+        "summary": "Delete pacient in system by id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+  },
+  "/pacient-update/{id}": {
+    "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "id of pacient",
+          "type": "string"
+        },
         {
           "name": "pacient",
           "in": "body",
-          "description": "the pacient to create",
+          "description": "the pacient to update",
           "schema": {
             "type": "object",
             "properties": {
@@ -305,112 +267,9 @@
           }
         }
     ],
-    "put": {
-      "tags": ["Create Pacient by id"],
-      "summary": "Create Pacient in system by id",
-      "responses": {
-        "200": {
-          "description": "OK"
-        }
-      }
-    } 
-  },
-  "/prescriptions": {
-    "get": {
-      "tags": ["Prescriptions"],
-      "summary": "Get all prescriptions in system",
-      "responses": {
-        "200": {
-          "description": "OK"
-        }
-      }
-    }
-  },
-  "/prescriptions/{date}": {
-      "parameters": [
-          {
-            "name": "date",
-            "in": "path",
-            "description": "date of prescription",
-            "type": "string"
-          }
-      ],
-      "get": {
-        "tags": ["Prescriptions by date"],
-        "summary": "Get all prescriptions in system by date",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-  },
-  "/prescription/{id}": {
-      "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "id of prescription",
-            "type": "string"
-          }
-      ],
-      "get": {
-        "tags": ["Prescription by id"],
-        "summary": "Get prescription in system by id",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-  },
-  "/prescription-delete/{id}": {
-      "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "id of prescription to delete",
-            "type": "string"
-          }
-      ],
-      "delete": {
-        "tags": ["Delete prescription by id"],
-        "summary": "Delete prescription in system by id",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-  },
-  "/prescription-update/{id}": {
-    "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "description": "id of prescription",
-          "type": "string"
-        },
-        {
-          "name": "prescription",
-          "in": "body",
-          "description": "the prescription to update",
-          "schema": {
-            "type": "object",
-            "properties": {
-              "data_reteta": {
-                "type":"string"
-              },
-              "descriere": {
-                "type":"string"
-              }           
-            }
-          }
-        }
-    ],
     "patch": {
-      "tags": ["Update prescription by id"],
-      "summary": "Update prescription in system by id",
+      "tags": ["Update pacient by id"],
+      "summary": "Update pacient in system by id",
       "responses": {
         "200": {
           "description": "OK"
@@ -418,12 +277,124 @@
       }
     }
 },
-"/prescription-create": {
+"/pacient-create": {
   "parameters": [    
+      {
+        "name": "pacient",
+        "in": "body",
+        "description": "the pacient to create",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "nume": {
+              "type":"string"
+            },
+            "prenume": {
+              "type":"string"
+            },
+            "data_nastere": {
+              "type":"string"
+            },
+            "telefon": {
+              "type":"string"
+            },
+            "email": {
+              "type":"string"
+            }
+          }
+        }
+      }
+  ],
+  "put": {
+    "tags": ["Create Pacient"],
+    "summary": "Create Pacient in system",
+    "responses": {
+      "200": {
+        "description": "OK"
+      }
+    }
+  } 
+},
+"/prescriptions": {
+  "get": {
+    "tags": ["Prescriptions"],
+    "summary": "Get all prescriptions in system",
+    "responses": {
+      "200": {
+        "description": "OK"
+      }
+    }
+  }
+},
+"/prescriptions/{date}": {
+    "parameters": [
+        {
+          "name": "date",
+          "in": "path",
+          "description": "date of prescription",
+          "type": "string"
+        }
+    ],
+    "get": {
+      "tags": ["Prescriptions by date"],
+      "summary": "Get all prescriptions in system by date",
+      "responses": {
+        "200": {
+          "description": "OK"
+        }
+      }
+    }
+},
+"/prescription/{id}": {
+    "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "id of prescription",
+          "type": "string"
+        }
+    ],
+    "get": {
+      "tags": ["Prescription by id"],
+      "summary": "Get prescription in system by id",
+      "responses": {
+        "200": {
+          "description": "OK"
+        }
+      }
+    }
+},
+"/prescription-delete/{id}": {
+    "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "id of prescription to delete",
+          "type": "string"
+        }
+    ],
+    "delete": {
+      "tags": ["Delete prescription by id"],
+      "summary": "Delete prescription in system by id",
+      "responses": {
+        "200": {
+          "description": "OK"
+        }
+      }
+    }
+},
+"/prescription-update/{id}": {
+  "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "description": "id of prescription",
+        "type": "string"
+      },
       {
         "name": "prescription",
         "in": "body",
-        "description": "the prescription to create",
+        "description": "the prescription to update",
         "schema": {
           "type": "object",
           "properties": {
@@ -432,25 +403,14 @@
             },
             "descriere": {
               "type":"string"
-            }  
+            }           
           }
         }
       }
   ],
-  "put": {
-    "tags": ["Create prescription by id"],
-    "summary": "Create prescription in system by id",
-    "responses": {
-      "200": {
-        "description": "OK"
-      }
-    }
-  } 
-},
-"/appointments": {
-  "get": {
-    "tags": ["Appointments"],
-    "summary": "Get all Appointments in system",
+  "patch": {
+    "tags": ["Update prescription by id"],
+    "summary": "Update prescription in system by id",
     "responses": {
       "200": {
         "description": "OK"
@@ -458,81 +418,252 @@
     }
   }
 },
+"/prescription-create": {
+"parameters": [    
+    {
+      "name": "prescription",
+      "in": "body",
+      "description": "the prescription to create",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "data_reteta": {
+            "type":"string"
+          },
+          "descriere": {
+            "type":"string"
+          }  
+        }
+      }
+    }
+],
+"put": {
+  "tags": ["Create prescription"],
+  "summary": "Create prescription in system",
+  "responses": {
+    "200": {
+      "description": "OK"
+    }
+  }
+} 
+},
+"/appointments": {
+"get": {
+  "tags": ["Appointments"],
+  "summary": "Get all Appointments in system",
+  "responses": {
+    "200": {
+      "description": "OK"
+    }
+  }
+}
+},
 "/appointment/{id}": {
-    "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "description": "id of appointment",
-          "type": "string"
-        }
-    ],
-    "get": {
-      "tags": ["Appointments by id"],
-      "summary": "Get appointments in system by id",
-      "responses": {
-        "200": {
-          "description": "OK"
-        }
-      }
-    }
-},
-"/appointment-delete/{id}": {
-    "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "description": "id of appointment to delete",
-          "type": "string"
-        }
-    ],
-    "delete": {
-      "tags": ["Delete appointment by id"],
-      "summary": "Delete appointment in system by id",
-      "responses": {
-        "200": {
-          "description": "OK"
-        }
-      }
-    }
-},
-"/appointment-update/{id}": {
   "parameters": [
       {
         "name": "id",
         "in": "path",
         "description": "id of appointment",
         "type": "string"
+      }
+  ],
+  "get": {
+    "tags": ["Appointments by id"],
+    "summary": "Get appointments in system by id",
+    "responses": {
+      "200": {
+        "description": "OK"
+      }
+    }
+  }
+},
+"/appointment-delete/{id}": {
+  "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "description": "id of appointment to delete",
+        "type": "string"
+      }
+  ],
+  "delete": {
+    "tags": ["Delete appointment by id"],
+    "summary": "Delete appointment in system by id",
+    "responses": {
+      "200": {
+        "description": "OK"
+      }
+    }
+  }
+},
+"/appointment-update/{id}": {
+"parameters": [
+    {
+      "name": "id",
+      "in": "path",
+      "description": "id of appointment",
+      "type": "string"
+    },
+    {
+      "name": "appointment",
+      "in": "body",
+      "description": "the appointment to create",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "pret": {
+            "type":"number"
+          },
+          "discount": {
+            "type":"number"
+          },
+          "data_consult": {
+            "type":"string"
+          },
+          "detalii": {
+            "type":"string"
+          },
+          "id_doctor": {
+            "type":"number"
+          }
+        }
+      }
+    }
+],
+  "patch": {
+    "tags": ["Update appointment by id"],
+    "summary": "Update appointment in system by id",
+    "responses": {
+      "200": {
+        "description": "OK"
+      }
+    }
+  }
+},
+"/appointment-create": {
+"parameters": [    
+    {
+      "name": "appointment",
+      "in": "body",
+      "description": "the appointment to create",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "id_pacient": {
+            "type":"number"
+          },
+          "id_reteta": {
+            "type":"number"
+          },
+          "id_diagnostic": {
+            "type":"number"
+          },
+          "id_doctor": {
+            "type":"number"
+          },
+          "pret": {
+            "type":"number"
+          },
+          "data_consult": {
+            "type":"string"
+          },
+          "detalii": {
+            "type":"string"
+          },
+          "discount": {
+            "type":"number"
+          }
+        }
+      }
+    }
+],
+"put": {
+  "tags": ["Create appointment"],
+  "summary": "Create appointment in system",
+  "responses": {
+    "200": {
+      "description": "OK"
+    }
+  }
+} 
+},
+"/procedures": {
+  "get": {
+    "tags": ["Procedures"],
+    "summary": "Get all Procedures in system",
+    "responses": {
+      "200": {
+        "description": "OK"
+      }
+    }
+  }
+},
+"/procedure/{id}": {
+    "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "id of procedure",
+          "type": "string"
+        }
+    ],
+    "get": {
+      "tags": ["Procedure by id"],
+      "summary": "Get procedure in system by id",
+      "responses": {
+        "200": {
+          "description": "OK"
+        }
+      }
+    }
+},
+"/procedure-delete/{id}": {
+    "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "id of procedure to delete",
+          "type": "string"
+        }
+    ],
+    "delete": {
+      "tags": ["Delete procedure by id"],
+      "summary": "Delete procedure in system by id",
+      "responses": {
+        "200": {
+          "description": "OK"
+        }
+      }
+    }
+},
+"/procedure-update/{id}": {
+  "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "description": "id of procedure",
+        "type": "string"
       },
       {
-        "name": "appointment",
+        "name": "med",
         "in": "body",
-        "description": "the appointment to create",
+        "description": "the procedure to create",
         "schema": {
           "type": "object",
           "properties": {
-            "pret": {
-              "type":"number"
-            },
-            "discount": {
-              "type":"number"
-            },
-            "data_consult": {
+            "nume_procedura": {
               "type":"string"
             },
-            "detalii": {
+            "informatii": {
               "type":"string"
-            },
-            "id_doctor": {
-              "type":"number"
             }
           }
         }
       }
   ],
     "patch": {
-      "tags": ["Update appointment by id"],
-      "summary": "Update appointment in system by id",
+      "tags": ["Update procedure by id"],
+      "summary": "Update procedure in system by id",
       "responses": {
         "200": {
           "description": "OK"
@@ -540,52 +671,275 @@
       }
     }
   },
-  "/appointment-create": {
+  "/procedure-create": {
   "parameters": [    
       {
-        "name": "appointment",
+        "name": "med",
         "in": "body",
-        "description": "the appointment to create",
+        "description": "the procedure to create",
         "schema": {
           "type": "object",
           "properties": {
-            "id_pacient": {
-              "type":"number"
-            },
-            "id_reteta": {
-              "type":"number"
-            },
-            "id_diagnostic": {
-              "type":"number"
-            },
-            "id_doctor": {
-              "type":"number"
-            },
-            "pret": {
-              "type":"number"
-            },
-            "data_consult": {
+            "nume_procedura": {
               "type":"string"
             },
-            "detalii": {
+            "informatii": {
               "type":"string"
-            },
-            "discount": {
-              "type":"number"
             }
           }
         }
       }
   ],
   "put": {
-    "tags": ["Create appointment by id"],
-    "summary": "Create appointment in system by id",
+    "tags": ["Create procedure"],
+    "summary": "Create procedure in system",
     "responses": {
       "200": {
         "description": "OK"
       }
     }
   } 
-  }
+  },
+  "/meds": {
+    "get": {
+      "tags": ["Meds"],
+      "summary": "Get all procedures in system",
+      "responses": {
+        "200": {
+          "description": "OK"
+        }
+      }
+    }
+  },
+  "/med/{id}": {
+      "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of med",
+            "type": "string"
+          }
+      ],
+      "get": {
+        "tags": ["Med by id"],
+        "summary": "Get Med in system by id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+  },
+  "/med-delete/{id}": {
+      "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of med to delete",
+            "type": "string"
+          }
+      ],
+      "delete": {
+        "tags": ["Delete  med by id"],
+        "summary": "Delete med in system by id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+  },
+  "/med-update/{id}": {
+    "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "id of med",
+          "type": "string"
+        },
+        {
+          "name": "med",
+          "in": "body",
+          "description": "the med to create",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "nume_medicament": {
+                "type":"string"
+              },
+              "pret": {
+                "type":"number"
+              }
+            }
+          }
+        }
+    ],
+      "patch": {
+        "tags": ["Update med by id"],
+        "summary": "Update med in system by id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/med-create": {
+    "parameters": [    
+        {
+          "name": "med",
+          "in": "body",
+          "description": "the med to create",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "nume_medicament": {
+                "type":"string"
+              },
+              "pret": {
+                "type":"number"
+              }
+            }
+          }
+        }
+    ],
+    "put": {
+      "tags": ["Create med"],
+      "summary": "Create med in system",
+      "responses": {
+        "200": {
+          "description": "OK"
+        }
+      }
+    } 
+  },
+  "/appointments_procedures": {
+    "get": {
+      "tags": ["Consult_Procedura"],
+      "summary": "Get all",
+      "responses": {
+        "200": {
+          "description": "OK"
+        }
+      }
+    }
+  },
+  "/appointment_procedure-delete/{id_app}/{id_procedure}": {
+      "parameters": [
+          {
+            "name": "id_app",
+            "in": "path",
+            "description": "id of appointment",
+            "type": "string"
+          },
+          {
+            "name": "id_procedure",
+            "in": "path",
+            "description": "id of procedure",
+            "type": "string"
+          }
+      ],
+      "delete": {
+        "tags": ["Delete consult_procedura"],
+        "summary": "Delete consult_procedura by id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+  },
+  "/appointment_procedure-create": {
+    "parameters": [    
+        {
+          "name": "consult_procedura",
+          "in": "body",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "id_consult": {
+                "type":"number"
+              },
+              "id_procedura": {
+                "type":"number"
+              }
+            }
+          }
+        }
+    ],
+    "put": {
+      "tags": ["Create consult_procedura"],
+      "summary": "Create consult_procedura",
+      "responses": {
+        "200": {
+          "description": "OK"
+        }
+      }
+    } 
+  },
+  "/prescriptions_meds": {
+    "get": {
+      "tags": ["Reteta_Medicament"],
+      "summary": "Get all",
+      "responses": {
+        "200": {
+          "description": "OK"
+        }
+      }
+    }
+  },
+  "/prescription_med-delete/{id_prescription}/{id_med}": {
+      "parameters": [
+          {
+            "name": "id_prescription",
+            "in": "path",
+            "description": "id of prescription",
+            "type": "string"
+          },
+          {
+            "name": "id_med",
+            "in": "path",
+            "description": "id of med",
+            "type": "string"
+          }
+      ],
+      "delete": {
+        "tags": ["Delete reteta_medicament"],
+        "summary": "Delete by id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/prescription_med-create": {
+    "parameters": [    
+        {
+          "name": "reteta_medicament",
+          "in": "body",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "id_reteta": {
+                "type":"number"
+              },
+              "id_medicament": {
+                "type":"number"
+              }
+            }
+          }
+        }
+    ],
+    "put": {
+      "tags": ["Create reteta_medicament"],
+      "summary": "Create reteta_medicament",
+      "responses": {
+        "200": {
+          "description": "OK"
+        }
+      }
+    } 
+    }
 }
 }
