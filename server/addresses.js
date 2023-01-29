@@ -2,36 +2,30 @@ const oracledb = require('oracledb');
 const router = require('express').Router();
 var credentials = require('./dbConnection.js');
 
-router.get("/doctors", (req, res) => {
-  getAllDoctors(res);
+router.get("/addresses", (req, res) => {
+  getAllAddresses(res);
 });
 
-router.get("/doctors/:name", (req, res) => {
-  let name = req.params.name;
-  console.log(name);
-  getDoctorsByLastName(res, name);
-});
-
-router.get("/doctor/:id", (req, res) => {
+router.get("/addresses/:id", (req, res) => {
   let id = req.params.id;
-  getDoctorById(res, id);
+  getAddressesById(res, id);
 });
 
-router.delete("/doctor-delete/:id", (req, res) => {
+router.delete("/address-delete/:id", (req, res) => {
   const id = req.params.id;
-  deleteDoctorById(res, id);
+  deleteAddressById(res, id);
 });
 
-router.put("/doctor-create", (req, res) => {
-  createDoctor(res, req.body);
+router.put("/address-create", (req, res) => {
+  createAddress(res, req.body);
 });
 
-router.patch("/doctor-update/:id", (req, res) => {
+router.patch("/address-update/:id", (req, res) => {
   const id = req.params.id;
-  updateDoctorById(res, req.body, id);
+  updateAddressById(res, req.body, id);
 });
 
-async function getAllDoctors(res) {
+async function getAllAddresses(res) {
   let connection;
 
   try {
@@ -39,9 +33,8 @@ async function getAllDoctors(res) {
     console.log("Successfully connected to Oracle Database");
 
     const result = await connection.execute(
-      // `SELECT d.nume, d.data_angajare, h.nume_spital, s.nume_specializare FROM doctor d, specializare s, spital h
-      //     WHERE d.id_specializare = s.id_specializare AND d.id_spital = h.id_spital`,
-      `SELECT d.nume, d.data_angajare, null, null FROM doctor d`,
+      `SELECT a.strada, a.cod_postal, o.nume_oras, (SELECT nume_judet FROM judet where id_judet = o.id_judet) FROM adresa a, oras o
+      WHERE a.id_oras = o.id_oras`,
     );
     res.json(result.rows);
   } catch (err) {
@@ -57,7 +50,7 @@ async function getAllDoctors(res) {
   }
 }
 
-async function getDoctorsByLastName(res, name) {
+async function getAddressesById(res, id) {
   let connection;
 
   try {
@@ -65,34 +58,8 @@ async function getDoctorsByLastName(res, name) {
     console.log("Successfully connected to Oracle Database");
 
     const result = await connection.execute(
-      `SELECT d.nume, d.data_angajare, h.nume_spital, s.nume_specializare FROM doctor d, specializare s, spital h
-          WHERE d.id_specializare = s.id_specializare AND d.id_spital = h.id_spital AND nume = :name`,
-      [name],
-    );
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-  } finally {
-    if (connection) {
-      try {
-        await connection.close();
-      } catch (err) {
-        console.error(err);
-      }
-    }
-  }
-}
-
-async function getDoctorById(res, id) {
-  let connection;
-
-  try {
-    connection = await oracledb.getConnection({ user: credentials.username, password: credentials.password, connectionString: credentials.connectionString, privilege: credentials.privilege })
-    console.log("Successfully connected to Oracle Database");
-
-    const result = await connection.execute(
-      `SELECT d.nume, d.data_angajare, h.nume_spital, s.nume_specializare FROM doctor d, specializare s, spital h
-          WHERE d.id_specializare = s.id_specializare AND d.id_spital = h.id_spital AND d.id_doctor = :id`,
+      `SELECT a.strada, a.cod_postal, o.nume_oras, (SELECT nume_judet FROM judet where id_judet = o.id_judet) FROM adresa a, oras o
+      WHERE a.id_oras = o.id_oras AND id_adresa = : id`,
       [id],
     );
     res.json(result.rows[0]);
@@ -109,7 +76,7 @@ async function getDoctorById(res, id) {
   }
 }
 
-async function deleteDoctorById(res, id) {
+async function deleteAddressById(res, id) {
   let connection;
 
   try {
@@ -117,11 +84,11 @@ async function deleteDoctorById(res, id) {
     console.log("Successfully connected to Oracle Database");
 
     const result = await connection.execute(
-      `DELETE FROM doctor WHERE id_doctor = :id`,
+      `DELETE FROM adresa WHERE id_adresa = :id`,
       [id],
     );
     connection.commit();
-    res.send('Doctor removed');
+    res.send('Adress removed');
   } catch (err) {
     console.error(err);
   } finally {
@@ -135,10 +102,8 @@ async function deleteDoctorById(res, id) {
   }
 }
 
-async function createDoctor(res, body) {
+async function createAddress(res, body) {
   let connection;
-
-  console.log("createDoctor");
 
   try {
     connection = await oracledb.getConnection({ user: credentials.username, password: credentials.password, connectionString: credentials.connectionString, privilege: credentials.privilege })
@@ -146,11 +111,11 @@ async function createDoctor(res, body) {
 
     let values = Object.values(body);
     const result = await connection.execute(
-      `INSERT INTO doctor VALUES(:1, :2, :3, TO_DATE(:4,'YYYY-MM-DD'))`,
+      `INSERT INTO adresa(id_oras, strada, cod_postal) VALUES(:1, :2, :3)`,
       values,
     );
     connection.commit();
-    res.send('Doctor added');
+    res.send('Address added');
   } catch (err) {
     console.error(err);
   } finally {
@@ -164,7 +129,7 @@ async function createDoctor(res, body) {
   }
 }
 
-async function updateDoctorById(res, body, id) {
+async function updateAddressById(res, body, id) {
   let connection;
 
   try {
@@ -174,13 +139,13 @@ async function updateDoctorById(res, body, id) {
     let values = Object.values(body);
     values.push(id);
     const result = await connection.execute(
-      `UPDATE doctor
-           SET id_spital = :1, id_specializare = :2, nume = :3, data_angajare = TO_DATE(:4,'YYYY-MM-DD')
-           WHERE id_doctor = :5`,
+      `UPDATE adresa
+           SET id_oras = :1, strada = :2, cod_postal = :3
+           WHERE id_adresa = :4`,
       values,
     );
     connection.commit();
-    res.send('Doctor updated');
+    res.send('Address updated');
   } catch (err) {
     console.error(err);
   } finally {

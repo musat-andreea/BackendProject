@@ -254,6 +254,9 @@
               "prenume": {
                 "type":"string"
               },
+              "sex": {
+                "type":"string"
+              },
               "data_nastere": {
                 "type":"string"
               },
@@ -290,6 +293,9 @@
               "type":"string"
             },
             "prenume": {
+              "type":"string"
+            },
+            "sex": {
               "type":"string"
             },
             "data_nastere": {
@@ -654,6 +660,9 @@
             "nume_procedura": {
               "type":"string"
             },
+            "pret_procedura": {
+              "type":"number"
+            },
             "informatii": {
               "type":"string"
             }
@@ -674,7 +683,7 @@
   "/procedure-create": {
   "parameters": [    
       {
-        "name": "med",
+        "name": "procedure",
         "in": "body",
         "description": "the procedure to create",
         "schema": {
@@ -682,6 +691,9 @@
           "properties": {
             "nume_procedura": {
               "type":"string"
+            },
+            "pret_procedura": {
+              "type":"number"
             },
             "informatii": {
               "type":"string"
@@ -940,6 +952,678 @@
         }
       }
     } 
+    },
+    "/diagnosis": {
+      "get": {
+        "tags": ["Diagnosis"],
+        "summary": "Get all",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/diagnosis/{id}": {
+      "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of diagnosis",
+            "type": "string"
+          }
+      ],
+      "get": {
+        "tags": ["Diagnosis by id"],
+        "summary": "Get Diagnosis in system by id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+  },
+    "/diagnosis-delete/{id}": {
+        "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "id of diagnostic",
+              "type": "string"
+            }
+        ],
+        "delete": {
+          "tags": ["Delete diagnosis"],
+          "summary": "Delete by id",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/diagnosis-create": {
+      "parameters": [    
+          {
+            "name": "diagnosis",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "denumire_diagnostic": {
+                  "type":"string"
+                }
+              }
+            }
+          }
+      ],
+      "put": {
+        "tags": ["Create diagnosis"],
+        "summary": "Create diagnosis",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      } 
+      },
+      "/diagnosis-update/{id}": {
+        "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "id of diagnosis",
+              "type": "string"
+            },
+            {
+              "name": "med",
+              "in": "body",
+              "description": "the diagnosis to create",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "denumire_diagnostic": {
+                    "type":"string"
+                  }
+                }
+              }
+            }
+        ],
+          "patch": {
+            "tags": ["Update diagnosis by id"],
+            "summary": "Update diagnosis in system by id",
+            "responses": {
+              "200": {
+                "description": "OK"
+              }
+            }
+          }
+        },
+      "/counties": {
+        "get": {
+          "tags": ["Counties"],
+          "summary": "Get all",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/counties/{id}": {
+        "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "id of county",
+              "type": "string"
+            }
+        ],
+        "get": {
+          "tags": ["Counties by id"],
+          "summary": "Get Counties in system by id",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+    },
+      "/county-delete/{id}": {
+          "parameters": [
+              {
+                "name": "id",
+                "in": "path",
+                "description": "id of county",
+                "type": "string"
+              }
+          ],
+          "delete": {
+            "tags": ["Delete county"],
+            "summary": "Delete by id",
+            "responses": {
+              "200": {
+                "description": "OK"
+              }
+            }
+          }
+        },
+        "/county-create": {
+        "parameters": [    
+            {
+              "name": "county",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nume_judet": {
+                    "type":"string"
+                  }
+                }
+              }
+            }
+        ],
+        "put": {
+          "tags": ["Create county"],
+          "summary": "Create county",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        } 
+        },
+        "/county-update/{id}": {
+          "parameters": [
+              {
+                "name": "id",
+                "in": "path",
+                "description": "id of county",
+                "type": "string"
+              },
+              {
+                "name": "county",
+                "in": "body",
+                "description": "the county to create",
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "nume_judet": {
+                      "type":"string"
+                    }
+                  }
+                }
+              }
+          ],
+            "patch": {
+              "tags": ["Update county by id"],
+              "summary": "Update county in system by id",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                }
+              }
+            }
+          },
+          "/cities": {
+            "get": {
+              "tags": ["Cities"],
+              "summary": "Get all",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                }
+              }
+            }
+          },
+          "/cities/{id}": {
+            "parameters": [
+                {
+                  "name": "id",
+                  "in": "path",
+                  "description": "id of city",
+                  "type": "string"
+                }
+            ],
+            "get": {
+              "tags": ["Cities by id"],
+              "summary": "Get cities in system by id",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                }
+              }
+            }
+        },
+          "/city-delete/{id}": {
+              "parameters": [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "description": "id of city",
+                    "type": "string"
+                  }
+              ],
+              "delete": {
+                "tags": ["Delete city"],
+                "summary": "Delete by id",
+                "responses": {
+                  "200": {
+                    "description": "OK"
+                  }
+                }
+              }
+            },
+            "/city-create": {
+            "parameters": [    
+                {
+                  "name": "city",
+                  "in": "body",
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "id_judet": {
+                        "type":"number"
+                      },
+                      "nume_oras": {
+                        "type":"string"
+                      }
+                    }
+                  }
+                }
+            ],
+            "put": {
+              "tags": ["Create city"],
+              "summary": "Create city",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                }
+              }
+            } 
+            },
+            "/city-update/{id}": {
+              "parameters": [
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "description": "id of city",
+                    "type": "string"
+                  },
+                  {
+                    "name": "city",
+                    "in": "body",
+                    "description": "the city to create",
+                    "schema": {
+                      "type": "object",
+                      "properties": {
+                        "id_judet": {
+                          "type":"number"
+                        },
+                        "nume_oras": {
+                          "type":"string"
+                        }
+                      }
+                    }
+                  }
+              ],
+                "patch": {
+                  "tags": ["Update city by id"],
+                  "summary": "Update city in system by id",
+                  "responses": {
+                    "200": {
+                      "description": "OK"
+                    }
+                  }
+                }
+      },
+      "/addresses": {
+        "get": {
+          "tags": ["Addresses"],
+          "summary": "Get all",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/addresses/{id}": {
+        "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "id of address",
+              "type": "string"
+            }
+        ],
+        "get": {
+          "tags": ["Addresses by id"],
+          "summary": "Get addresses in system by id",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+    },
+      "/address-delete/{id}": {
+          "parameters": [
+              {
+                "name": "id",
+                "in": "path",
+                "description": "id of address",
+                "type": "string"
+              }
+          ],
+          "delete": {
+            "tags": ["Delete address"],
+            "summary": "Delete by id",
+            "responses": {
+              "200": {
+                "description": "OK"
+              }
+            }
+          }
+        },
+        "/address-create": {
+        "parameters": [    
+            {
+              "name": "address",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id_oras": {
+                    "type":"number"
+                  },
+                  "strada": {
+                    "type":"string"
+                  },
+                  "cod_postal": {
+                    "type":"string"
+                  }
+                }
+              }
+            }
+        ],
+        "put": {
+          "tags": ["Create address"],
+          "summary": "Create address",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        } 
+        },
+        "/address-update/{id}": {
+          "parameters": [
+              {
+                "name": "id",
+                "in": "path",
+                "description": "id of address",
+                "type": "string"
+              },
+              {
+                "name": "address",
+                "in": "body",
+                "description": "the address to create",
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id_oras": {
+                      "type":"number"
+                    },
+                    "strada": {
+                      "type":"string"
+                    },
+                    "cod_postal": {
+                      "type":"string"
+                    }
+                  }
+                }
+              }
+          ],
+            "patch": {
+              "tags": ["Update address by id"],
+              "summary": "Update address in system by id",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                }
+              }
+            }
+   },
+   "/hospitals": {
+    "get": {
+      "tags": ["Hospitals"],
+      "summary": "Get all",
+      "responses": {
+        "200": {
+          "description": "OK"
+        }
+      }
     }
-}
+  },
+  "/hospitals/{id}": {
+    "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "id of hospital",
+          "type": "string"
+        }
+    ],
+    "get": {
+      "tags": ["Hospital by id"],
+      "summary": "Get hospital in system by id",
+      "responses": {
+        "200": {
+          "description": "OK"
+        }
+      }
+    }
+},
+  "/hospital-delete/{id}": {
+      "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of hospital",
+            "type": "string"
+          }
+      ],
+      "delete": {
+        "tags": ["Delete hospital"],
+        "summary": "Delete by id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/hospital-create": {
+    "parameters": [    
+        {
+          "name": "hospital",
+          "in": "body",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "id_adresa": {
+                "type":"number"
+              },
+              "nume_spital": {
+                "type":"string"
+              },
+              "contact": {
+                "type":"string"
+              }
+            }
+          }
+        }
+    ],
+    "put": {
+      "tags": ["Create hospital"],
+      "summary": "Create hospital",
+      "responses": {
+        "200": {
+          "description": "OK"
+        }
+      }
+    } 
+    },
+    "/hospital-update/{id}": {
+      "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of hospital",
+            "type": "string"
+          },
+          {
+            "name": "hospital",
+            "in": "body",
+            "description": "the hospital to create",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id_adresa": {
+                  "type":"number"
+                },
+                "nume_spital": {
+                  "type":"string"
+                },
+                "contact": {
+                  "type":"string"
+                }
+              }
+            }
+          }
+      ],
+        "patch": {
+          "tags": ["Update hospital by id"],
+          "summary": "Update hospital in system by id",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+    },
+    "/fields": {
+      "get": {
+        "tags": ["Fields"],
+        "summary": "Get all",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/fields/{id}": {
+      "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of fields",
+            "type": "string"
+          }
+      ],
+      "get": {
+        "tags": ["Field by id"],
+        "summary": "Get field in system by id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+  },
+    "/field-delete/{id}": {
+        "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "id of field",
+              "type": "string"
+            }
+        ],
+        "delete": {
+          "tags": ["Delete field"],
+          "summary": "Delete by id",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/field-create": {
+      "parameters": [    
+          {
+            "name": "field",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nume_specializare": {
+                  "type":"string"
+                },
+                "categorie": {
+                  "type":"string"
+                }
+              }
+            }
+          }
+      ],
+      "put": {
+        "tags": ["Create field"],
+        "summary": "Create field",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      } 
+      },
+      "/field-update/{id}": {
+        "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "id of field",
+              "type": "string"
+            },
+            {
+              "name": "field",
+              "in": "body",
+              "description": "the field to create",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nume_specializare": {
+                    "type":"string"
+                  },
+                  "categorie": {
+                    "type":"string"
+                  }
+                }
+              }
+            }
+        ],
+          "patch": {
+            "tags": ["Update field by id"],
+            "summary": "Update fields in system by id",
+            "responses": {
+              "200": {
+                "description": "OK"
+              }
+            }
+          }
+  }    
+ }
 }

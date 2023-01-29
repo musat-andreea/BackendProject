@@ -108,13 +108,9 @@ async function createMed(res, body) {
       connection = await oracledb.getConnection({ user: credentials.username, password: credentials.password, connectionString: credentials.connectionString});
       console.log("Successfully connected to Oracle Database");
   
-      const recordNo = await connection.execute(
-        `SELECT MAX(id_medicament) FROM medicament`, 
-      );
       let values = Object.values(body);
-      values.unshift(recordNo.rows[0][0] + 1);
       const result = await connection.execute(
-          `INSERT INTO medicament VALUES(:1, :2, :3)`, 
+          `INSERT INTO medicament VALUES(:1, :2)`, 
           values,
       );
       connection.commit();

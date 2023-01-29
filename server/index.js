@@ -7,6 +7,12 @@ const meds = require("./meds.js");
 const procedures = require("./procedures.js");
 const app_procedures = require("./appointment_procedure.js");
 const prescription_med = require("./prescription_med.js");
+const diagnosis = require("./diagnosis.js");
+const counties = require("./counties.js");
+const cities = require("./cities.js");
+const addresses = require("./addresses.js");
+const hospitals = require("./hospitals.js");
+const fields = require("./fields.js");
 
 const PORT = process.env.PORT || 8008;
 
@@ -21,6 +27,12 @@ app.use('/', meds);
 app.use('/', procedures);
 app.use('/', app_procedures);
 app.use('/', prescription_med);
+app.use('/', diagnosis);
+app.use('/', counties);
+app.use('/', cities);
+app.use('/', addresses);
+app.use('/', hospitals);
+app.use('/', fields);
 
 const swaggerUi = require("swagger-ui-express");
 swaggerDocument = require("../swagger.json");
