@@ -57,7 +57,7 @@ async function getProcedureById(res, id) {
       console.log("Successfully connected to Oracle Database");
   
       const result = await connection.execute(
-          `SELECT nume_procedura, informatii FROM procedura
+          `SELECT nume_procedura, pret_procedura, informatii FROM procedura
            WHERE id_procedura = :id`, 
           [id],
       );
@@ -108,13 +108,9 @@ async function createProcedure(res, body) {
       connection = await oracledb.getConnection({ user: credentials.username, password: credentials.password, connectionString: credentials.connectionString});
       console.log("Successfully connected to Oracle Database");
   
-      const recordNo = await connection.execute(
-        `SELECT MAX(id_procedura) FROM procedura`, 
-      );
       let values = Object.values(body);
-      values.unshift(recordNo.rows[0][0] + 1);
       const result = await connection.execute(
-          `INSERT INTO procedura VALUES(:1, :2, :3)`, 
+          `INSERT INTO procedura(nume_procedura, pret_procedura, informatii) VALUES(:1, :2, :3)`, 
           values,
       );
       connection.commit();
@@ -143,8 +139,8 @@ async function updateProcedureById(res, body, id) {
       values.push(id);
       const result = await connection.execute(
           `UPDATE procedura
-           SET nume_procedura = :1, informatii = :2
-           WHERE id_procedura = :3`, 
+           SET nume_procedura = :1, pret_procedura = :3, informatii = :2
+           WHERE id_procedura = :4`, 
            values,
       );
       connection.commit();

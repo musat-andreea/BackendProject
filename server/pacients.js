@@ -137,14 +137,10 @@ async function createPacient(res, body) {
     connection = await oracledb.getConnection({ user: credentials.username, password: credentials.password, connectionString: credentials.connectionString, privilege: credentials.privilege })
     console.log("Successfully connected to Oracle Database");
 
-    const recordNo = await connection.execute(
-      `SELECT MAX(id_pacient) FROM pacient`,
-    );
     let values = Object.values(body);
-    values.unshift(recordNo.rows[0][0] + 1);
 
     const result = await connection.execute(
-      `INSERT INTO pacient VALUES(:1, :2, :3, TO_DATE(:4,'YYYY-MM-DD'), :5, :6)`,
+      `INSERT INTO pacient(nume, prenume, sex, data_nastere, telefon, email) VALUES(:1, :2, :3, TO_DATE(:4,'YYYY-MM-DD'), :5, :6)`,
       values,
     );
     connection.commit();

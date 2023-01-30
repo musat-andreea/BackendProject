@@ -115,13 +115,9 @@ async function createAppointment(res, body) {
     connection = await oracledb.getConnection({ user: credentials.username, password: credentials.password, connectionString: credentials.connectionString, privilege: credentials.privilege })
     console.log("Successfully connected to Oracle Database");
 
-    const recordNo = await connection.execute(
-      `SELECT MAX(id_consult) FROM consult`,
-    );
     let values = Object.values(body);
-    values.unshift(recordNo.rows[0][0] + 1);
     const result = await connection.execute(
-      `INSERT INTO consult VALUES(:1, :2, :3, :4, :5, :6, TO_DATE(:7,'YYYY-MM-DD'), :8, :9)`,
+      `INSERT INTO consult VALUES(:1, :2, :3, :4, :5, TO_DATE(:6,'YYYY-MM-DD'), :7, :8)`,
       values,
     );
     connection.commit();

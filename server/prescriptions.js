@@ -136,14 +136,10 @@ async function createPrescription(res, body) {
     connection = await oracledb.getConnection({ user: credentials.username, password: credentials.password, connectionString: credentials.connectionString, privilege: credentials.privilege })
     console.log("Successfully connected to Oracle Database");
 
-    const recordNo = await connection.execute(
-      `SELECT MAX(id_reteta) FROM reteta`,
-    );
     let values = Object.values(body);
-    values.unshift(recordNo.rows[0][0] + 1);
 
     const result = await connection.execute(
-      `INSERT INTO reteta VALUES(:1, TO_DATE(:2,'YYYY-MM-DD'), :3)`,
+      `INSERT INTO reteta VALUES(TO_DATE(:1,'YYYY-MM-DD'), :2)`,
       values,
     );
     connection.commit();
