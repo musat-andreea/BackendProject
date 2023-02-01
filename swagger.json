@@ -1624,6 +1624,50 @@
               }
             }
           }
-  }    
+  },
+  "/pacients-dw": {
+    "get": {
+      "tags": ["Pacients"],
+      "summary": "Get all",
+      "responses": {
+        "200": {
+          "description": "OK"
+        }
+      }
+    }
+  }, 
+  "/prescriptions-dw": {
+    "get": {
+      "tags": ["Prescriptions"],
+      "summary": "Get all",
+      "responses": {
+        "200": {
+          "description": "OK"
+        }
+      }
+    }
+  },
+  "/doctors-dw": {
+    "get": {
+      "tags": ["Doctors"],
+      "summary": "Get all",
+      "responses": {
+        "200": {
+          "description": "OK"
+        }
+      }
+    }
+  },
+  "/hospitals-dw": {
+    "get": {
+      "tags": ["Hospitals"],
+      "summary": "Get all",
+      "responses": {
+        "200": {
+          "description": "OK"
+        }
+      }
+    }
+  }
  }
 }
