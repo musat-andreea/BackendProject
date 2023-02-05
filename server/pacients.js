@@ -3,7 +3,7 @@ const oracledb = require('oracledb');
 var credentials = require('./dbConnection.js');
 
 router.get("/pacients", (req, res) => {
-  getAllPacients(res);
+  getAllPacients(req, res);
 });
 
 router.get("/pacients/:lastName", (req, res) => {
@@ -30,17 +30,32 @@ router.patch("/pacient-update/:id", (req, res) => {
   updatePacientById(res, req.body, id);
 });
 
-async function getAllPacients(res) {
+async function getAllPacients(req, res) {
   let connection;
+  let pageSize = req.query.pageSize ?? 10;
+  let pageNr = req.query.pageNr ?? 1;
+
+  pageSize = parseInt(pageSize);
+  pageNr = parseInt(pageNr);
 
   try {
     connection = await oracledb.getConnection({ user: credentials.username, password: credentials.password, connectionString: credentials.connectionString, privilege: credentials.privilege })
     console.log("Successfully connected to Oracle Database");
 
+    // const queryString = `SELECT d.nume, d.data_angajare, null, null FROM pacient p`
+    // console.log(queryString);
     const result = await connection.execute(
       `SELECT * FROM pacient`,
     );
-    res.json(result.rows);
+    let paginatedResult = [];
+    result.rows.forEach((row, index) => {
+      console.log(index, row);
+      if (index >= ( (pageNr - 1) * pageSize) && index < ( pageNr * pageSize))  {
+        paginatedResult.push(row);
+      }
+    })
+    res.json(paginatedResult);
+   // res.json(result.rows);
   } catch (err) {
     console.error(err);
   } finally {

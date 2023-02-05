@@ -1,8 +1,9 @@
 const oracledb = require('oracledb');
 
 module.exports = {
-    username: 'SYS',
-    password: 'oracle',
-    connectionString: 'oracle:1521/orcl',
-    privilege: oracledb.SYSDBA,
+    username: 'AndreeaM',
+    password: 'ANDREEAM',
+    connectionString: 'oracle-105547-0.cloudclusters.net:10197/xe',
+    //database: 'Cloud'
+    //privilege: oracledb.SYSDBA,
 };
