@@ -13,6 +13,7 @@ const cities = require("./cities.js");
 const addresses = require("./addresses.js");
 const hospitals = require("./hospitals.js");
 const fields = require("./fields.js");
+const dw = require("./tableView.js");
 
 const PORT = process.env.PORT || 8008;
 
@@ -33,6 +34,7 @@ app.use('/', cities);
 app.use('/', addresses);
 app.use('/', hospitals);
 app.use('/', fields);
+app.use('/', dw);
 
 const swaggerUi = require("swagger-ui-express");
 swaggerDocument = require("../swagger.json");
