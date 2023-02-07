@@ -45,11 +45,11 @@ async function getAllPacients(req, res) {
     // const queryString = `SELECT d.nume, d.data_angajare, null, null FROM pacient p`
     // console.log(queryString);
     const result = await connection.execute(
-      `SELECT * FROM pacient`,
+      `SELECT * FROM pacient ORDER BY ID_PACIENT DESC`,
     );
     let paginatedResult = [];
     result.rows.forEach((row, index) => {
-      console.log(index, row);
+      // console.log(index, row);
       if (index >= ( (pageNr - 1) * pageSize) && index < ( pageNr * pageSize))  {
         paginatedResult.push(row);
       }
@@ -154,10 +154,12 @@ async function createPacient(res, body) {
 
     let values = Object.values(body);
 
+    console.log(values);
     const result = await connection.execute(
-      `INSERT INTO pacient(nume, prenume, sex, data_nastere, telefon, email) VALUES(:1, :2, :3, TO_DATE(:4,'YYYY-MM-DD'), :5, :6)`,
+      `INSERT INTO pacient(nume, prenume, data_nastere, telefon, email, sex) VALUES(:2, :1, TO_DATE(:3,'YYYY-MM-DD'), :4, :5, :6)`,
       values,
     );
+    console.log(result);
     connection.commit();
     res.send('Pacient added');
   } catch (err) {
@@ -182,11 +184,27 @@ async function updatePacientById(res, body, id) {
 
     let values = Object.values(body);
     values.push(id);
+    let query = 'UPDATE pacient SET ';
+
+
+    if (body.hasOwnProperty('nume')) {
+      query += `nume = '${body.nume}'`;
+    }
+    if (body.hasOwnProperty('prenume') && body['prenume'] != '') {
+      query += `, prenume = '${body.prenume}'`;
+    }
+    if (body.hasOwnProperty('email') && body['email'] != '') {
+      query += `, email = '${body.email}'`;
+    }
+    if (body.hasOwnProperty('telefon') && body['telefon'] != '') {
+      query += `, telefon = '${body.telefon}'`;
+    }
+
+    query += ` WHERE id_pacient = ${id}`;
+
+    console.log(query);
     const result = await connection.execute(
-      `UPDATE pacient
-           SET nume = :1, prenume = :2, data_nastere = TO_DATE(:3,'YYYY-MM-DD'), email = :4, telefon = :5
-           WHERE id_pacient = :6`,
-      values,
+        query
     );
     connection.commit();
     res.send('Pacient updated');
