@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const doctors = require("./doctors.js");
 const pacients = require("./pacients.js");
 const prescriptions = require("./prescriptions.js");
@@ -20,6 +21,9 @@ const PORT = process.env.PORT || 8008;
 const app = express();
 
 app.use(express.json());
+
+app.use(cors());
+
 app.use('/', doctors);
 app.use('/', pacients);
 app.use('/', prescriptions);

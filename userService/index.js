@@ -3,7 +3,6 @@ const session = require("express-session");
 const mongoose = require("mongoose");
 const redis = require("redis");
 const RedisStore = require("connect-redis")(session);
-const cors = require("cors");
 const users = require("./routes/users.js");
 
 const app = express();
@@ -50,5 +49,4 @@ app.use(session({
 
 app.use(express.json());
 app.enable("trust proxy");
-app.use(cors({}));
 app.use('/api/users', users);
