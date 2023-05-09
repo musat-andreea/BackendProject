@@ -2,6 +2,8 @@ const oracledb = require('oracledb');
 const router = require('express').Router();
 var credentials = require('./dbConnection.js');
 
+const BUCHAREST_CITY_ID = 3;
+
 router.get("/doctors", (req, res) => {
   getAllDoctors(req, res);
 });
@@ -35,6 +37,7 @@ async function getAllDoctors(req, res) {
   let connection;
   let pageSize = req.query.pageSize ?? 10;
   let pageNr = req.query.pageNr ?? 1;
+  const city = req.query.city ?? '';
 
   pageSize = parseInt(pageSize);
   pageNr = parseInt(pageNr);
@@ -43,7 +46,17 @@ async function getAllDoctors(req, res) {
     connection = await oracledb.getConnection({ user: credentials.username, password: credentials.password, connectionString: credentials.connectionString, privilege: credentials.privilege })
     console.log("Successfully connected to Oracle Database");
 
-    const queryString = `SELECT d.id_doctor, d.nume, d.data_angajare, null, null FROM doctor d`
+    let queryString = `SELECT d.id_doctor, d.nume, d.data_angajare, null, null FROM doctor d`
+    if (city) {
+      queryString = queryString + ` JOIN spital s ON (d.id_spital = s.id_spital)
+                                        JOIN adresa a ON (s.id_adresa = a.id_adresa)`;
+
+      if (city === 'Bucuresti')  {
+          queryString = queryString + ` WHERE a.id_oras = ${BUCHAREST_CITY_ID} `;
+      } else {
+        queryString = queryString + ` WHERE a.id_oras != ${BUCHAREST_CITY_ID} `;
+      }
+    }
     // console.log(queryString);
     const result = await connection.execute(
       // `SELECT d.nume, d.data_angajare, h.nume_spital, s.nume_specializare FROM doctor d, specializare s, spital h
@@ -160,7 +173,8 @@ async function createDoctor(res, body) {
 
     let values = Object.values(body);
     console.log(values);
-    let query = `INSERT INTO doctor (nume, data_angajare) VALUES('${values[2]}', TO_DATE('${values[3]}','YYYY-MM-DD'))`;
+    let query = `INSERT INTO doctor (id_doctor, id_spital, id_specializare, nume, prenume, data_angajare) 
+    VALUES ((SELECT MAX(id_doctor) +1 FROM doctor), 1, 1, '${values[2]}', '${values[3]}', TO_DATE('${values[4]}','YYYY-MM-DD'))`;
     console.log(query);
     const result = await connection.execute(
       query
